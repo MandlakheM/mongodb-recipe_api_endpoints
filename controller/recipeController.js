@@ -40,6 +40,22 @@ export const createRecipe = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
+    if (typeof name !== "string" || name.trim() === "") {
+      return res.status(400).json({ message: "Invalid name field" });
+    } else if (typeof ingredients !== "string" || name.trim() === "") {
+      return res.status(400).json({ message: "Invalid ingredients field" });
+    } else if (typeof instructions !== "string" || instructions.trim() === "") {
+      return res.status(400).json({ message: "Invalid instructions field" });
+    } else if (typeof category !== "string" || category.trim() === "") {
+      return res.status(400).json({ message: "Invalid category field" });
+    } else if (typeof prepTime !== "number") {
+      return res.status(400).json({ message: "Invalid prep time field" });
+    } else if (typeof cookTime !== "number") {
+      return res.status(400).json({ message: "Invalid cook time field" });
+    } else if (typeof servings !== "number") {
+      return res.status(400).json({ message: "Invalid servings field" });
+    }
+
     const recipe = new Recipe({
       name,
       ingredients,
@@ -49,6 +65,10 @@ export const createRecipe = async (req, res) => {
       cookTime,
       servings,
     });
+    const validationResult = recipe.validateSync();
+    if (validationResult) {
+      return res.status(400).json({ message: "Invalid data provided" });
+    }
     await recipe.save();
     res.status(201).json(recipe);
   } catch (err) {
@@ -65,6 +85,32 @@ export const updateRecipe = async (req, res) => {
     if (!updatedRecipe) {
       return res.status(404).json({ error: "Recipe not found" });
     }
+
+    if (typeof req.body.name !== "string" || req.body.name.trim() === "") {
+      return res.status(400).json({ message: "Invalid name field" });
+    } else if (
+      typeof req.body.ingredients !== "string" ||
+      req.body.ingredients.trim() === ""
+    ) {
+      return res.status(400).json({ message: "Invalid ingredients field" });
+    } else if (
+      typeof req.body.instructions !== "string" ||
+      req.body.instructions.trim() === ""
+    ) {
+      return res.status(400).json({ message: "Invalid instructions field" });
+    } else if (
+      typeof req.body.category !== "string" ||
+      req.body.category.trim() === ""
+    ) {
+      return res.status(400).json({ message: "Invalid category field" });
+    } else if (typeof req.body.prepTime !== "number") {
+      return res.status(400).json({ message: "Invalid prep time field" });
+    } else if (typeof req.body.cookTime !== "number") {
+      return res.status(400).json({ message: "Invalid cook time field" });
+    } else if (typeof req.body.servings !== "number") {
+      return res.status(400).json({ message: "Invalid servings field" });
+    }
+
     res.status(200).json(updatedRecipe);
   } catch (err) {
     return res.status(500).json({ error: "Internal server error" });
@@ -83,7 +129,7 @@ export const deleteRecipe = async (req, res) => {
     res.status(200).json({ message: "Recipe successfully deleted" });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -99,6 +145,6 @@ export const getRecipeById = async (req, res) => {
     res.status(200).json(recipe);
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
