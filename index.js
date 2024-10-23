@@ -14,6 +14,7 @@ app.use(express.json());
 connectDB();
 
 app.use("/", recipeRoutes);
+app.all("*", (req, res) => res.send("error 404 page not found"));
 
 app.listen(PORT, () =>
   console.log(

@@ -28,18 +28,6 @@ export const createRecipe = async (req, res) => {
       servings,
     } = req.body;
 
-    if (
-      !name ||
-      !ingredients ||
-      !instructions ||
-      !category ||
-      !prepTime ||
-      !cookTime ||
-      !servings
-    ) {
-      return res.status(400).json({ message: "Missing required fields" });
-    }
-
     if (typeof name !== "string" || name.trim() === "") {
       return res.status(400).json({ message: "Invalid name field" });
     } else if (typeof ingredients !== "string" || name.trim() === "") {
