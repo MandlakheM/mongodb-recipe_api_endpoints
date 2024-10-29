@@ -3,6 +3,8 @@ import * as bcrypt from "bcrypt";
 import validator from "validator";
 
 const userSchema = new mongoose.Schema({
+  fullName: { type: String, required: true },
+
   email: {
     type: String,
     required: true,
@@ -15,18 +17,18 @@ const userSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: function (value) {
-        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&^])[A-Za-z\d@.#$!%*?&]{8,15}$/.test(
+        return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(
           value
         );
       },
       message:
-        "Password must include, at least one lowercase alphabet, at least one uppercase alphabet, at least one numeric digit, at least one special character, and also, the total length must be in the range.",
+        "Password must include at least one lowercase letter, one uppercase letter, one numeric digit, one special character, and must be between 6 and 16 characters in length.",
     },
   },
 });
 
-userSchema.methods.matchPasswords= async function (userPassword) {
-    return await bcrypt.compare(userPassword, this.password)
-}
+userSchema.methods.matchPasswords = async function (userPassword) {
+  return await bcrypt.compare(userPassword, this.password);
+};
 
-export default mongoose.model("User", userSchema)
+export default mongoose.model("User", userSchema);

@@ -4,6 +4,7 @@ import "dotenv/config";
 import connectDB from "./config/db.js";
 
 import recipeRoutes from "./routes/recipeRoutes.js";
+import authRoutes from "./routes/authRoutes.js"
 
 const PORT = process.env.PORT;
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.json());
 connectDB();
 
 app.use("/", recipeRoutes);
+app.use("/auth", authRoutes)
 app.all("*", (req, res) => res.send("error 404 page not found"));
 
 app.listen(PORT, () =>
