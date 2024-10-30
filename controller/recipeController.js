@@ -30,8 +30,6 @@ export const createRecipe = async (req, res) => {
 
     if (typeof name !== "string" || name.trim() === "") {
       return res.status(400).json({ message: "Invalid name field" });
-    } else if (typeof ingredients !== "string" || name.trim() === "") {
-      return res.status(400).json({ message: "Invalid ingredients field" });
     } else if (typeof instructions !== "string" || instructions.trim() === "") {
       return res.status(400).json({ message: "Invalid instructions field" });
     } else if (typeof category !== "string" || category.trim() === "") {
@@ -76,11 +74,6 @@ export const updateRecipe = async (req, res) => {
 
     if (typeof req.body.name !== "string" || req.body.name.trim() === "") {
       return res.status(400).json({ message: "Invalid name field" });
-    } else if (
-      typeof req.body.ingredients !== "string" ||
-      req.body.ingredients.trim() === ""
-    ) {
-      return res.status(400).json({ message: "Invalid ingredients field" });
     } else if (
       typeof req.body.instructions !== "string" ||
       req.body.instructions.trim() === ""

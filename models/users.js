@@ -25,6 +25,8 @@ const userSchema = new mongoose.Schema({
         "Password must include at least one lowercase letter, one uppercase letter, one numeric digit, one special character, and must be between 6 and 16 characters in length.",
     },
   },
+
+  role: { type: String, enum: ["admin", "user"], default: "user" },
 });
 
 userSchema.methods.matchPasswords = async function (userPassword) {
