@@ -196,7 +196,7 @@ Start the server:
 
 1.Copy the JSON: Copy the entire JSON content provided above.
 
-2.Open Postman: Launch the Postman application on your computer.
+2.Open Postman: Launch the Postman website on your computer.
 
 3.Import Collection:
 
