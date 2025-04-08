@@ -44,4 +44,6 @@ Add the following environment variables to ``.env``:
 
 Start the server:
 
-``npm run dev``
+``npm run server``
+
+
